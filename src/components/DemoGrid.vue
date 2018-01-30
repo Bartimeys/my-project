@@ -13,7 +13,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="entry in filteredData" :key="entry.id">
+      <tr v-for="entry in data" :key="entry.id">
         <td v-for="key in columns" :key="key.id">
           {{entry[key]}}
         </td>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import eventBus from './EventBus.js'
 export default {
   name: 'DemoGrid',
   data () {
@@ -51,29 +52,6 @@ export default {
     columns: Array,
     filterKey: String
   },
-  computed: {
-    filteredData: function () {
-      let sortKey = this.sortKey
-      let filterKey = this.filterKey && this.filterKey.toLowerCase()
-      let order = this.sortOrders[sortKey] || 1
-      let data = this.data
-      if (filterKey) {
-        data = data.filter(function (row) {
-          return Object.keys(row).some(function (key) {
-            return String(row[key]).toLowerCase().indexOf(filterKey) > -1
-          })
-        })
-      }
-      if (sortKey) {
-        data = data.slice().sort(function (a, b) {
-          a = a[sortKey]
-          b = b[sortKey]
-          return (a === b ? 0 : a > b ? 1 : -1) * order
-        })
-      }
-      return data
-    }
-  },
   filters: {
     capitalize: function (str) {
       return str.charAt(0).toUpperCase() + str.slice(1)
@@ -81,9 +59,11 @@ export default {
   },
   methods: {
     sortBy: function (key) {
-      this.sortKey = key
-      this.sortOrders[key] = this.sortOrders[key] * -1
-      this.sortOrders[key] = this.sortOrders[key] * -1
+      eventBus.$emit('sortChanged', {
+        sortKey: key,
+        sortOrder: this.sortOrders[key] * -1
+      })
+      this.sortOrders[key] *= -1
     },
     totalSum: function () {
       let self = this
@@ -95,6 +75,9 @@ export default {
       self.total = totalData.reduce(function (totalData, num) { return totalData + num }, 0)
       return self.total
     }
+  },
+  created () {
+    this.totalSum()
   }
 }
 </script>
