@@ -14,9 +14,10 @@
       </thead>
       <tbody>
       <tr v-for="entry in data" :key="entry.id">
-        <td v-for="key in columns" :key="key.id">
-          {{entry[key]}}
-        </td>
+        <table-cell  v-for="key in columns" :key="key.id" v-bind:cellValue="entry[key]"></table-cell>
+        <!--<td v-for="key in columns" :key="key.id">-->
+          <!--{{entry[key]}}-->
+        <!--</td>-->
       </tr>
       </tbody>
       <tfoot>
@@ -33,9 +34,13 @@
 </template>
 
 <script>
-import eventBus from './EventBus.js'
+import eventBus from '../assets/utils/EventBus.js'
+import TableCell from './TableCell'
 export default {
   name: 'DemoGrid',
+  components: {
+    TableCell
+  },
   data () {
     let sortOrders = {}
     this.columns.forEach(function (key) {
@@ -74,6 +79,10 @@ export default {
       console.log(totalData.reduce(function (totalData, num) { return totalData + num }, 0))
       self.total = totalData.reduce(function (totalData, num) { return totalData + num }, 0)
       return self.total
+    },
+    update: function () {
+      // this.$emit('update', event.target.innerText)
+      console.log('test')
     }
   },
   created () {

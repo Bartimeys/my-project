@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import eventBus from './EventBus.js'
+import eventBus from '../assets/utils/EventBus.js'
 export default {
   name: 'gridFilter',
   data: function () {

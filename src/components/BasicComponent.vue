@@ -14,7 +14,7 @@ import DemoGrid from './DemoGrid'
 import Pager from './Pager'
 import GridFilter from './GridFilter'
 import json from '../../data/test'
-import eventBus from './EventBus.js'
+import eventBus from '../assets/utils/EventBus.js'
 export default {
   name: 'BasicComponent',
   components: {
