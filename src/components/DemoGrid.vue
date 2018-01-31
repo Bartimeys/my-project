@@ -79,10 +79,6 @@ export default {
       console.log(totalData.reduce(function (totalData, num) { return totalData + num }, 0))
       self.total = totalData.reduce(function (totalData, num) { return totalData + num }, 0)
       return self.total
-    },
-    update: function () {
-      // this.$emit('update', event.target.innerText)
-      console.log('test')
     }
   },
   created () {
@@ -105,7 +101,7 @@ export default {
     margin: 0 10px;
   }
   a {
-    color: #42b983;
+    color: rgb(144, 202, 249);
   }
 
   .arrow {

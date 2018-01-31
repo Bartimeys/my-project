@@ -1,6 +1,7 @@
 <template>
   <form id="search">
-    Search <input name="query" type="text" v-on:keyup="filterChanged" v-model="filter">
+    <label>Search</label>
+    <input name="query" type="text" v-on:keyup="filterChanged" v-model="filter">
   </form>
 </template>
 

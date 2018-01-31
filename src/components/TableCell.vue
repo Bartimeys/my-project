@@ -1,6 +1,6 @@
 <template>
   <td v-if="editMode">
-    <input type="text" v-model="cellValue" v-on:blur="setEdit(false)"/>
+    <input type="text" v-model="cellValue" v-on:blur="setEdit(false)" autofocus/>
   </td>
   <td v-else>
     <span v-on:click="setEdit(true)">{{cellValue}}</span>
@@ -17,8 +17,12 @@ export default {
   },
   props: ['cellValue'],
   methods: {
-    setEdit: function (val) {
-      this.editMode = val
+    setEdit: function(val){
+      this.editMode = val;
+      if (!val){
+        let numVal = this.cellValue ? parseInt(this.cellValue) : 0;
+        this.$emit('update:cellValue', numVal)
+      }
     }
   }
 }

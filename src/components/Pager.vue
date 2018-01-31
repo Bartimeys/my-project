@@ -102,7 +102,7 @@ export default {
   }
 
   .next {
-    background-color: #4CAF50;
+    background-color: lightgrey;
     color: white;
   }
 
