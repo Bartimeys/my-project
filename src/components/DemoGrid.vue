@@ -73,6 +73,7 @@ export default {
     total: function () {
       let self = this
       return self.data.reduce((acc, val) => {
+        console.log(this.data)
         return acc + val.currency
       }, 0)
     }
