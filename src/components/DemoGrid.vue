@@ -14,10 +14,9 @@
       </thead>
       <tbody>
       <tr v-for="entry in data" :key="entry.id">
-        <table-cell  v-for="key in columns" :key="key.id" v-bind:cellValue="entry[key]"></table-cell>
-        <!--<td v-for="key in columns" :key="key.id">-->
-          <!--{{entry[key]}}-->
-        <!--</td>-->
+        <table-cell  v-bind:cellValue="entry.name"></table-cell>
+        <table-cell  v-bind:cellValue="entry.location"></table-cell>
+        <table-cell  v-bind:cellValue.sync="entry.currency"></table-cell>
       </tr>
       </tbody>
       <tfoot>
@@ -48,8 +47,7 @@ export default {
     })
     return {
       sortKey: '',
-      sortOrders: sortOrders,
-      total: []
+      sortOrders: sortOrders
     }
   },
   props: {
@@ -69,20 +67,15 @@ export default {
         sortOrder: this.sortOrders[key] * -1
       })
       this.sortOrders[key] *= -1
-    },
-    totalSum: function () {
-      let self = this
-      let totalData = []
-      Object.entries(self.data).forEach(([key, val]) => {
-        totalData.push(val.currency) // the value of the current key.
-      })
-      console.log(totalData.reduce(function (totalData, num) { return totalData + num }, 0))
-      self.total = totalData.reduce(function (totalData, num) { return totalData + num }, 0)
-      return self.total
     }
   },
-  created () {
-    this.totalSum()
+  computed: {
+    total: function () {
+      let self = this
+      return self.data.reduce((acc, val) => {
+        return acc + val.currency
+      }, 0)
+    }
   }
 }
 </script>
